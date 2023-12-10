@@ -23,7 +23,7 @@ public class CommandHelper {
     public void rares(Player p) {
         sendCenteredMessage(p, "&7]&r&7&m----------------&r&7[ &r&e&l&nRares &r&7]&r&7&m----------------&r&7[");
         chatNoPrefix(p, "");
-        sendCenteredMessage(p, "&aFull list of Rares: &ehttps://shorturl.at/gGHN9&r");
+        sendCenteredMessage(p, "&aFull list of Rares: &ehttps://shorturl.at/sBMP6&r");
         chatNoPrefix(p, "");
         sendCenteredMessage(p, "&7]&r&7&m----------------------------------------------&r&7[");
     }
@@ -36,7 +36,7 @@ public class CommandHelper {
         chatNoPrefix(p, "&c - &fEnglish is the language to be used in global chat.");
         chatNoPrefix(p, "&c - &fWe do not condone racism, sexism, homophobia, or any other type or prejudice or discrimination.");
         chatNoPrefix(p, "");
-        chatNoPrefix(p, "&aPlease view our full rules list at: &ehttps://shorturl.at/kzDPT");
+        chatNoPrefix(p, "&aPlease view our full rules list at: &ehttps://shorturl.at/aILZ6&r");
         chatNoPrefix(p, "");
         sendCenteredMessage(p, "&7]&r&7&m----------------------------------------------&r&7[");
     }
