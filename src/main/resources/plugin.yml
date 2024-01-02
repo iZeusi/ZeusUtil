@@ -5,6 +5,7 @@ api-version: 1.19
 prefix: ZU
 load: STARTUP
 authors: [ Zeus ]
+softdepend: [PlaceholderAPI]
 description: ZeusUtil
 website: https://ZeusCodes.io
 commands:
@@ -15,16 +16,21 @@ commands:
     description: See the rules of the server
     aliases: [rule]
     usage: /Rules
-#  ranks:
-#    description: See the ranks of the server
-#    aliases: [rank, voteranks]
-#    usage: /Ranks
+  ranks:
+    description: See the ranks of the server
+    aliases: [rank, voteranks]
+    usage: /Ranks
   broad:
     description: Broadcast a message to the server
     usage: /Broad [Message]
+  key:
+    description: Give monthly key to user
+    usage: /key [Player] [Amount]
 permissions:
   zu.admin:
     description: Admin Perm
   zu.broad:
     description: Broadcast Perm
+  zu.key:
+    description: Key Perm
 

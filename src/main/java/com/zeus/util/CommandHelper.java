@@ -3,14 +3,36 @@ package com.zeus.util;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandHelper {
 
-    String prefix = "&7[&eE&6M&7]&r ";
+    String prefix = "";
+
+    public CommandHelper() {
+        File f = new File("plugins/ZeusUtil/config.yml");
+        YamlConfiguration yamlConfig = saveConfig(f);
+
+
+        prefix = yamlConfig.getString("Message Prefix");
+    }
+
+    private YamlConfiguration saveConfig(File f) {
+        YamlConfiguration yamlConfig = YamlConfiguration.loadConfiguration(f);
+        try {
+            yamlConfig.save(f);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return yamlConfig;
+    }
 
     public boolean hasPermission(CommandSender p, String perm) {
         return p.isOp() || p.hasPermission("zu.admin") || p.hasPermission("zu." + perm);
@@ -18,6 +40,25 @@ public class CommandHelper {
 
     public void broadcast(String message) {
         Bukkit.broadcastMessage(colorize(prefix + message));
+    }
+
+    public String key(String playerName, int amount) {
+        Player p = null;
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.getName().equalsIgnoreCase(playerName)) {
+                p = online;
+            }
+        }
+
+        if (p != null) {
+            File f = new File("plugins/ZeusUtil/config.yml");
+            YamlConfiguration yamlConfig = saveConfig(f);
+
+            String keyName = yamlConfig.getString("Monthly Key Name");
+            String cmd = "crate key give " + p.getName() + " " + keyName + " " + amount;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            return "&aSent successfully";
+        } else return "&cCould not find Player with that name. Are they online?";
     }
 
     public void rares(Player p) {
@@ -44,35 +85,33 @@ public class CommandHelper {
     public void ranks(Player p) {
         sendCenteredMessage(p, "&7]&r&7&m----------------&r&7[ &r&e&l&nRanks &r&7]&r&7&m----------------&r&7[");
         chatNoPrefix(p, "");
-        sendCenteredMessage(p, "&eRank Name &7| &bVote Count &7| &aHomes &7| &cClaim Blocks p/h");
+        sendCenteredMessage(p, "&eRank Name &7| &bVote Count &7| &aHomes ");
         chatNoPrefix(p, "");
-        sendCenteredMessage(p, "&ePeasant &7| &b0 Votes &7| &a1 Homes &7| &c100 p/h");
+        sendCenteredMessage(p, "&ePeasant &7| &b0 Votes &7| &a1 Homes");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eFarmer &7| &b3 Votes &7| &a2 Homes &7| &c110 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &a/Workbench");
+        sendCenteredMessage(p, "&eFarmer &7| &b5 Votes &7| &a2 Homes");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eCommoner &7| &b9 Votes &7| &a3 Homes &7| &c125 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &a/Enderchest");
+        sendCenteredMessage(p, "&eCommoner &7| &b15 Votes &7| &a3 Homes");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eSquire &7| &b27 Votes &7| &a4 Homes &7| &c150 p/h");
+        sendCenteredMessage(p, "&eSquire &7| &b45 Votes &7| &a4 Homes");
         sendCenteredMessage(p, "&7Unlocks: &aShop Plot");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eKnight &7| &b48 Votes &7| &a5 Homes &7| &c175 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &a/Back");
+        sendCenteredMessage(p, "&eKnight &7| &b90 Votes &7| &a5 Homes");
+        sendCenteredMessage(p, "&7Unlocks: &a/Craft");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eCommander &7| &b90 Votes &7| &a6 Homes &7| &c200 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &aSilk Touch Spawners");
+        sendCenteredMessage(p, "&eCommander &7| &b150 Votes &7| &a6 Homes");
+        sendCenteredMessage(p, "&7Unlocks: &a/Condense");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eLord &7| &b150 Votes &7| &a7 Homes &7| &c250 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &a/Spawner [Type]");
+        sendCenteredMessage(p, "&eLord &7| &b250 Votes &7| &a7 Homes");
+        sendCenteredMessage(p, "&7Unlocks: &a/Feed");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eBaron &7| &b300 Votes &7| &a8 Homes &7| &c350 p/h");
-        sendCenteredMessage(p, "&7Unlocks: &a/Feed&7, &a/Condense&7, &a/Top");
+        sendCenteredMessage(p, "&eBaron &7| &b500 Votes &7| &a8 Homes");
+        sendCenteredMessage(p, "&7Unlocks: &a/ZE Name");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eEmperor &7| &b660 Votes &7| &a9 Homes &7| &c500 p/h");
+        sendCenteredMessage(p, "&eEmperor &7| &b750 Votes &7| &a9 Homes");
         sendCenteredMessage(p, "&7Unlocks: &a/Repair Hand &7(15 Min Cooldown)");
         sendCenteredMessage(p, "");
-        sendCenteredMessage(p, "&eDeity &7| &b999 Votes &7| &a10 Homes &7| &c750 p/h");
+        sendCenteredMessage(p, "&eDeity &7| &b1000 Votes &7| &a10 Homes");
         sendCenteredMessage(p, "&7Unlocks: &a/Repair All");
         chatNoPrefix(p, "");
         sendCenteredMessage(p, "&7]&r&7&m----------------------------------------------&r&7[");
@@ -80,6 +119,10 @@ public class CommandHelper {
 
     public void chatNoPrefix(Player p, String msg) {
         p.sendMessage(colorize(msg + "&r"));
+    }
+
+    public void chatPrefix(CommandSender p, String msg) {
+        p.sendMessage(colorize(prefix + msg + "&r"));
     }
 
     public String colorize(String msg) {

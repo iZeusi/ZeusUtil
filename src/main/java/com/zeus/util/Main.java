@@ -4,25 +4,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Commands commands = new Commands();
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
-        this.getCommand("rules").setExecutor(commands);
-        this.getCommand("ranks").setExecutor(commands);
-        this.getCommand("rares").setExecutor(commands);
-        this.getCommand("broad").setExecutor(commands);
-        handleSchedMsgs();
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
+        this.getCommand("rules").setExecutor(new Commands());
+        this.getCommand("ranks").setExecutor(new Commands());
+        this.getCommand("rares").setExecutor(new Commands());
+        this.getCommand("broad").setExecutor(new Commands());
+        this.getCommand("key").setExecutor(new Commands());
+        handleScheduledMsgs();
     }
 
     @Override
@@ -30,7 +29,7 @@ public final class Main extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private void handleSchedMsgs() {
+    private void handleScheduledMsgs() {
         CommandHelper cH = new CommandHelper();
         File file = new File("plugins/ZeusUtil/scheduled.yml");
         YamlConfiguration yamlConfig = YamlConfiguration.loadConfiguration(file);

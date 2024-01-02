@@ -15,12 +15,26 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (label.equalsIgnoreCase("broad")) {
-            if (args.length > 0) {
-                if (cH.hasPermission(sender, "broad")) {
-                    cH.broadcast(String.join(" ", args));
+        switch (label.toLowerCase()) {
+            case "broad":
+                if (args.length > 0) {
+                    if (cH.hasPermission(sender, "broad")) {
+                        cH.broadcast(String.join(" ", args));
+                    }
                 }
-            }
+                break;
+            case "key":
+                if (cH.hasPermission(sender, "key")) {
+                    if (args.length == 2) {
+                        try {
+                            int amount = Integer.parseInt(args[1]);
+                            cH.chatPrefix(sender, cH.key(args[0], amount));
+                        } catch (NumberFormatException nfe) {
+                            cH.chatPrefix(sender, "&cIncorrect usage: Amount must be a Number");
+                        }
+                    } else cH.chatPrefix(sender, "&cIncorrect usage: /Key <Player> <Amount>");
+                } else cH.chatPrefix(sender, "&cNo permission!");
+                break;
         }
         if (sender instanceof Player) {
             Player p = (Player) sender;
